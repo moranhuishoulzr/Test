@@ -5,11 +5,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>web</groupId>
-  <artifactId>com.it</artifactId>
+  <artifactId>com</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>war</packaging>
 
-  <name>com.it Maven Webapp</name>
+  <name>com Maven Webapp</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
@@ -94,7 +94,7 @@
   </dependencies>
 
   <build>
-    <finalName>com.it</finalName>
+    <finalName>com</finalName>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
         <plugin>
