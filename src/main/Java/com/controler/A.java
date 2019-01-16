@@ -7,6 +7,5 @@ package com.controler;
  * @create: 2019-01-16 17:32
  */
 public class A {
-    String f;
-    String f1;
+  //mmmmmmmmmmmmmmmmmm
 }
