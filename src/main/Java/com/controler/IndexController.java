@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class IndexController {
     @RequestMapping("/index")
     public String index() {
-        String s3;
-        String s4;
-        return "comit1";
+        String s1;
+        String s2;
+        return "comit00000";
     }
 }
