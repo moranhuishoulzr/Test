@@ -20,7 +20,7 @@ import java.util.Set;
  * @author: liangzr
  * @create: 2019-01-29 16:36
  */
-public class Consumer_pull {
+public class Consumer_pull2 {
     private static Map<MessageQueue,Long> offsetTable=new HashMap<MessageQueue, Long>();
     public static void processMessage() throws Exception{
         DefaultMQPullConsumer consumer = new DefaultMQPullConsumer("CCC1");
@@ -30,6 +30,7 @@ public class Consumer_pull {
             Set<MessageQueue>  queues = consumer.fetchSubscribeMessageQueues("FIXUAT");
             for(MessageQueue queue:queues){
                 SINGLE_MQ:while(true){
+
                     PullResultExt pullResult =(PullResultExt)consumer.pullBlockIfNotFound(queue, "*", getMessageQueueOffset(queue), 35);
                     putMessageQueueOffset(queue, pullResult.getNextBeginOffset());
                     switch (pullResult.getPullStatus()){
