@@ -13,14 +13,16 @@ import org.apache.rocketmq.common.message.Message;
 public class Producer {
     public static void main(String[] args) throws  Exception{
         DefaultMQProducer producer=new DefaultMQProducer("ProducerGroupName");
-        producer.setNamesrvAddr("192.168.70.128:9876;192.168.70.101:9876");
-        producer.setInstanceName("pro");
+        producer.setNamesrvAddr("192.168.162.235:9876;192.168.162.236:9876");
+        //producer.setSendMsgTimeout(2000);
+        //producer.setInstanceName("pro");
         producer.start();
         for (int i=0;i<10;i++){
-            Message msg=new Message("topic1","tag1",("hello MQ"+i).getBytes());
+            Message msg=new Message("AA","tag1",("hello MQ"+i).getBytes());
             SendResult result=producer.send(msg);
             System.out.println("message："+(new String(msg.getBody())));
             System.out.println("result:"+result);
         }
+        producer.shutdown();
     }
 }

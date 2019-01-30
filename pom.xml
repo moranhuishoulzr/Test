@@ -91,6 +91,90 @@
       <artifactId>commons-lang3</artifactId>
       <version>3.4</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.apache.rocketmq/rocketmq-client -->
+    <dependency>
+      <groupId>org.apache.rocketmq</groupId>
+      <artifactId>rocketmq-client</artifactId>
+      <version>4.3.2</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.apache.rocketmq/rocketmq-common -->
+    <dependency>
+      <groupId>org.apache.rocketmq</groupId>
+      <artifactId>rocketmq-common</artifactId>
+      <version>4.3.2</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.apache.rocketmq/rocketmq-srvutil -->
+    <dependency>
+      <groupId>org.apache.rocketmq</groupId>
+      <artifactId>rocketmq-srvutil</artifactId>
+      <version>4.3.2</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/com.alibaba.rocketmq/rocketmq-store -->
+    <dependency>
+      <groupId>com.alibaba.rocketmq</groupId>
+      <artifactId>rocketmq-store</artifactId>
+      <version>3.2.6</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.apache.rocketmq/rocketmq-remoting -->
+    <dependency>
+      <groupId>org.apache.rocketmq</groupId>
+      <artifactId>rocketmq-remoting</artifactId>
+      <version>4.3.2</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.apache.rocketmq/rocketmq-namesrv -->
+    <dependency>
+      <groupId>org.apache.rocketmq</groupId>
+      <artifactId>rocketmq-namesrv</artifactId>
+      <version>4.3.2</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.apache.rocketmq/rocketmq-broker -->
+    <dependency>
+      <groupId>org.apache.rocketmq</groupId>
+      <artifactId>rocketmq-broker</artifactId>
+      <version>4.3.2</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.apache.rocketmq/rocketmq-logging -->
+    <dependency>
+      <groupId>org.apache.rocketmq</groupId>
+      <artifactId>rocketmq-logging</artifactId>
+      <version>4.3.2</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.apache.rocketmq/rocketmq-tools -->
+    <dependency>
+      <groupId>org.apache.rocketmq</groupId>
+      <artifactId>rocketmq-tools</artifactId>
+      <version>4.3.2</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.apache.rocketmq/rocketmq-filter -->
+    <dependency>
+      <groupId>org.apache.rocketmq</groupId>
+      <artifactId>rocketmq-filter</artifactId>
+      <version>4.3.2</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.apache.rocketmq/rocketmq-openmessaging -->
+    <dependency>
+      <groupId>org.apache.rocketmq</groupId>
+      <artifactId>rocketmq-openmessaging</artifactId>
+      <version>4.3.2</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.apache.rocketmq/rocketmq-example -->
+    <dependency>
+      <groupId>org.apache.rocketmq</groupId>
+      <artifactId>rocketmq-example</artifactId>
+      <version>4.3.2</version>
+    </dependency>
+
+
+
+
+
+
+
+
+
+
+
   </dependencies>
 
   <build>
