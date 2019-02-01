@@ -17,8 +17,8 @@ public class Producer {
         //producer.setSendMsgTimeout(2000);
         //producer.setInstanceName("pro");
         producer.start();
-        for (int i=0;i<10;i++){
-            Message msg=new Message("AA","tag1",("hello MQ"+i).getBytes());
+        for (int i=0;i<64;i++){
+            Message msg=new Message("CC","tag1",("hello MQ"+i).getBytes());
             SendResult result=producer.send(msg);
             System.out.println("message："+(new String(msg.getBody())));
             System.out.println("result:"+result);

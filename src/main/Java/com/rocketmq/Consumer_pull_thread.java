@@ -1,18 +1,15 @@
 package com.rocketmq;
-import org.apache.rocketmq.client.consumer.DefaultMQPullConsumer;
-import org.apache.rocketmq.client.exception.MQClientException;
-import org.apache.rocketmq.client.impl.consumer.PullResultExt;
+
+import org.apache.rocketmq.client.consumer.*;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.common.message.MessageQueue;
+import org.apache.rocketmq.common.protocol.heartbeat.MessageModel;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * @program: com
@@ -21,21 +18,27 @@ import java.util.Set;
  * @create: 2019-01-29 16:36
  */
 public class Consumer_pull_thread {
-    private static Map<MessageQueue,Long> offsetTable=new HashMap<MessageQueue, Long>();
-    public static void processMessage() throws Exception{
-        DefaultMQPullConsumer consumer = new DefaultMQPullConsumer("CCC1");
-        consumer.setNamesrvAddr("192.168.162.235:9876;192.168.162.236:9876");
-        consumer.start();
-        try{
-            Set<MessageQueue>  queues = consumer.fetchSubscribeMessageQueues("FIXUAT");
-            for(MessageQueue queue:queues){
-                SINGLE_MQ:while(true){
-                    PullResultExt pullResult =(PullResultExt)consumer.pullBlockIfNotFound(queue, "*", getMessageQueueOffset(queue), 35);
-                    putMessageQueueOffset(queue, pullResult.getNextBeginOffset());
-                    switch (pullResult.getPullStatus()){
+    public static void process(Long offset) throws Exception{
+        String groupName="BB3";
+        String topicName="CC";
+        final MQPullConsumerScheduleService scheduleService = new MQPullConsumerScheduleService(groupName);
+        scheduleService.getDefaultMQPullConsumer().setNamesrvAddr("192.168.162.235:9876;192.168.162.236:9876");
+        scheduleService.setMessageModel(MessageModel.CLUSTERING);
+        scheduleService.registerPullTaskCallback(topicName, new PullTaskCallback() {
+            @Override
+            public void doPullTask(MessageQueue mq, PullTaskContext context) {
+                MQPullConsumer consumer=context.getPullConsumer();
+                try {
+                    /*long offset = consumer.fetchConsumeOffset(mq, false);
+                    if(offset<0){
+                        offset=0;
+                    }*/
+                    PullResult pullResult = consumer.pull(mq, "*", offset, 32);
+                    //System.out.printf("%s%n", offset + "\t" + mq + "\t" + pullResult);
+                    switch (pullResult.getPullStatus()) {
                         case FOUND:
                             List<MessageExt> messageExtList = pullResult.getMsgFoundList();
-                            System.out.println("一次拉取个数"+messageExtList.size());
+                            //System.out.println("一次拉取个数"+messageExtList.size());
                             for (MessageExt m : messageExtList) {
                                 DateTimeFormatter ftf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                                 String time=ftf.format(LocalDateTime.ofInstant(Instant.ofEpochMilli(m.getStoreTimestamp()), ZoneId.systemDefault()));
@@ -43,29 +46,25 @@ public class Consumer_pull_thread {
                             }
                             break;
                         case NO_MATCHED_MSG:
-                            break SINGLE_MQ;
+                            break;
                         case NO_NEW_MSG:
-                            break SINGLE_MQ;
+                        case OFFSET_ILLEGAL:
+                            break;
                         default:
                             break;
                     }
+                    consumer.updateConsumeOffset(mq, pullResult.getNextBeginOffset());
+                    context.setPullNextDelayTimeMillis(100);
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
             }
-        }catch (MQClientException e){
-            e.printStackTrace();
-        }
+        });
+        scheduleService.start();
     }
-    public static void main(String[] args) throws  Exception {
-        processMessage();
-    }
-    private static void putMessageQueueOffset(MessageQueue mq, long offset) {
-        offsetTable.put(mq, offset);
-    }
+    public static void main(String[] args) throws Exception{
+        Long offset = 375L;
+        process(offset);
 
-    private static long getMessageQueueOffset(MessageQueue mq) {
-        Long offset = offsetTable.get(mq);
-        if (offset != null)
-            return offset;
-        return 0;
     }
 }

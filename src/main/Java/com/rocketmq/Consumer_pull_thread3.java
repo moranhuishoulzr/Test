@@ -20,7 +20,7 @@ import java.util.Map;
  * @author: liangzr
  * @create: 2019-01-29 16:36
  */
-public class Consumer_pull_thread2 {
+public class Consumer_pull_thread3 {
     private static Map<MessageQueue,Long> offsetTable=new HashMap<MessageQueue, Long>();
     public static void main(String[] args) throws Exception{
         Long offset = 1300L;
@@ -38,7 +38,7 @@ public class Consumer_pull_thread2 {
             @Override
             public void doPullTask(MessageQueue mq, PullTaskContext context) {
 
-               // System.out.println(mq.getBrokerName()+" "+mq.getQueueId());
+                // System.out.println(mq.getBrokerName()+" "+mq.getQueueId());
                 DefaultMQPullConsumer consumer=(DefaultMQPullConsumer)context.getPullConsumer();
                 try {
                     long consumerOffset = consumer.fetchConsumeOffset(mq,true);//获取队列的消费进度
