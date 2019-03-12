@@ -38,6 +38,7 @@ public class Consumer_pull_thread2 {
         String topicName="ee4";
         final MQPullConsumerScheduleService scheduleService = new MQPullConsumerScheduleService(groupName);
         DefaultMQPullConsumer consumer=scheduleService.getDefaultMQPullConsumer();
+
         consumer.setNamesrvAddr("192.168.162.235:9876;192.168.162.236:9876");
 
         ServiceState serviceState=consumer.getDefaultMQPullConsumerImpl().getServiceState();
