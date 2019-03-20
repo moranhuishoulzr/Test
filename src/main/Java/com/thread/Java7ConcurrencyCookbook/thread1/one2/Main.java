@@ -1,4 +1,4 @@
-package com.thread.Java7ConcurrencyCookbook.thread1.two;
+package com.thread.Java7ConcurrencyCookbook.thread1.one2;
 
 import java.io.FileWriter;
 import java.io.IOException;
