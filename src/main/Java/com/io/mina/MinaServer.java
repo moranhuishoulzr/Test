@@ -23,6 +23,7 @@ public class MinaServer {
     private static IoAcceptor acceptor=null;
     public static void main(String[] args) throws IOException {
         acceptor=new NioSocketAcceptor();
+
         acceptor.getFilterChain().addLast("codec",new ProtocolCodecFilter(new TextLineCodecFactory(Charset.forName("UTF-8"),
                 LineDelimiter.WINDOWS.getValue(),
                 LineDelimiter.WINDOWS.getValue()
@@ -31,10 +32,14 @@ public class MinaServer {
         acceptor.getSessionConfig().setReadBufferSize(BUFFSIZE);
         acceptor.setHandler(new MinaHandler());
         acceptor.bind(new InetSocketAddress(PORT));
-        acceptor.bind();
+
+
+        InetSocketAddress inetSocketAddress1=new InetSocketAddress(7081);
+        acceptor.bind(inetSocketAddress1);
+
+
 
     }
-
 }
 
 
