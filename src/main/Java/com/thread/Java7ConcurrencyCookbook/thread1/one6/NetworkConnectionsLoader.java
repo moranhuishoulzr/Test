@@ -12,12 +12,12 @@ import java.util.concurrent.TimeUnit;
 public class NetworkConnectionsLoader implements Runnable{
     @Override
     public void run() {
-        System.out.printf("begin NetworkConnectionsLoader"+new Date());
+        System.out.println("begin NetworkConnectionsLoader"+new Date());
         try {
-            TimeUnit.SECONDS.sleep(4);
+            TimeUnit.SECONDS.sleep(6);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.printf("end NetworkConnectionsLoader"+new Date());
+        System.out.println("end NetworkConnectionsLoader"+new Date());
     }
 }

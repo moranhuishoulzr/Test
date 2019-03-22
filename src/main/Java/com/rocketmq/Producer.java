@@ -20,7 +20,7 @@ public class Producer {
     private static Logger logger1=Logger.getLogger(Producer.class);
     public static void main(String[] args) throws  Exception{
         DefaultMQProducer producer=new DefaultMQProducer("FF");
-        producer.setNamesrvAddr("192.168.162.235:9876;192.168.162.236:9876");
+        producer.setNamesrvAddr("192.168.75.128:9876;192.168.75.129:9876");
         //producer.setSendMsgTimeout(2000);
         //producer.setInstanceName("pro");
         producer.start();

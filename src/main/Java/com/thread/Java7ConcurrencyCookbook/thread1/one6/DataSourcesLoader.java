@@ -12,12 +12,12 @@ import java.util.concurrent.TimeUnit;
 public class DataSourcesLoader implements Runnable{
     @Override
     public void run() {
-        System.out.printf("begin DataSourcesLoader"+new Date());
+        System.out.println("begin DataSourcesLoader"+new Date());
         try {
             TimeUnit.SECONDS.sleep(4);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.printf("end DataSourcesLoader"+new Date());
+        System.out.println("end DataSourcesLoader"+new Date());
     }
 }

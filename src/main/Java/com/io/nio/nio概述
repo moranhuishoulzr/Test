@@ -58,6 +58,80 @@ Java NIO 由以下几个核心部分组成：
 
     注意只有position和limit之间的数据才会被写入。因此，如果一个buffer的容量为128byte，但是仅仅包含58byte的数据，那么这58byte的数据将被写入到channel中。
     因此与Scattering Reads相反，Gathering Writes能较好的处理动态消息。
+第六章 Selector
+    Selector（选择器）是Java NIO中能够检测一到多个NIO通道，并能够知晓通道是否为诸如读写事件做好准备的组件。这样，一个单独的线程可以管理多个channel，从而管理多个网络连接。
+    对于操作系统来说，线程之间上下文切换的开销很大，而且每个线程都要占用系统的一些资源（如内存）。因此，使用的线程越少越好。
+
+    与Selector一起使用时，Channel必须处于非阻塞模式下。这意味着不能将FileChannel与Selector一起使用，因为FileChannel不能切换到非阻塞模式。而套接字通道都可以。
+    注意register()方法的第二个参数。这是一个“interest集合”，意思是在通过Selector监听Channel时对什么事件感兴趣。可以监听四种不同类型的事件：
+        Connect连接就绪
+        Accept接收就绪
+        Read读就绪
+        Write写就绪
+
+    SelectionKey
+    在上一小节中，当向Selector注册Channel时，register()方法会返回一个SelectionKey对象。这个对象包含了一些你感兴趣的属性：
+
+    interest集合
+    ready集合
+    Channel
+    Selector
+    附加的对象（可选）
+    下面我会描述这些属性。
+
+    interest集合
+    就像向Selector注册通道一节中所描述的，interest集合是你所选择的感兴趣的事件集合。可以通过SelectionKey读写interest集合，像这样：
+
+    1
+    int interestSet = selectionKey.interestOps();
+    2
+
+    3
+    boolean isInterestedInAccept  = (interestSet & SelectionKey.OP_ACCEPT) == SelectionKey.OP_ACCEPT；
+    4
+    boolean isInterestedInConnect = interestSet & SelectionKey.OP_CONNECT;
+    5
+    boolean isInterestedInRead    = interestSet & SelectionKey.OP_READ;
+    6
+    boolean isInterestedInWrite   = interestSet & SelectionKey.OP_WRITE;
+    可以看到，用“位与”操作interest 集合和给定的SelectionKey常量，可以确定某个确定的事件是否在interest 集合中。
+
+    ready集合
+    ready 集合是通道已经准备就绪的操作的集合。在一次选择(Selection)之后，你会首先访问这个ready set。Selection将在下一小节进行解释。可以这样访问ready集合：
+
+    1
+    int readySet = selectionKey.readyOps();
+    可以用像检测interest集合那样的方法，来检测channel中什么事件或操作已经就绪。但是，也可以使用以下四个方法，它们都会返回一个布尔类型：
+
+    1
+    selectionKey.isAcceptable();
+    2
+    selectionKey.isConnectable();
+    3
+    selectionKey.isReadable();
+    4
+    selectionKey.isWritable();
+    Channel + Selector
+    从SelectionKey访问Channel和Selector很简单。如下：
+
+    1
+    Channel  channel  = selectionKey.channel();
+    2
+    Selector selector = selectionKey.selector();
+    附加的对象
+    可以将一个对象或者更多信息附着到SelectionKey上，这样就能方便的识别某个给定的通道。例如，可以附加 与通道一起使用的Buffer，或是包含聚集数据的某个对象。使用方法如下：
+
+    1
+    selectionKey.attach(theObject);
+    2
+    Object attachedObj = selectionKey.attachment();
+    还可以在用register()方法向Selector注册Channel的时候附加对象。如：
+
+    view sourceprint?
+    1
+    SelectionKey key = channel.register(selector, SelectionKey.OP_READ, theObject);
+
+
 
 
 

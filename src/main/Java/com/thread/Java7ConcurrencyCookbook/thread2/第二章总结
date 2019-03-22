@@ -3,3 +3,34 @@
 Lock接口及其实现
 
 2.1基本线程同步（二）同步方法  two1
+
+2.3基本线程同步（三）在同步的类里安排独立属性 two3
+
+2.4基本线程同步（四）在同步代码中使用条件 two4
+    一个线程可以在synchronized代码块中调用wait()方法。如果在synchronized代码块外部调用wait()方法，JVM会抛出IllegalMonitorStateException异常。当线程调用wait()方法，JVM让
+    这个线程睡眠，并且释放控制 synchronized代码块的对象，这样，虽然它正在执行但允许其他线程执行由该对象保护的其他synchronized代码块。为了唤醒线程，你必须在由相同对象保护的
+    synchronized代码块中调用notify()或notifyAll()方法。
+    用while和if的区别
+
+2.5基本线程同步（五）使用Lock同步代码块 two5
+    Java提供另外的机制用来同步代码块。它比synchronized关键字更加强大、灵活。它是基于Lock接口和实现它的类（如ReentrantLock）。这种机制有如下优势：
+    它允许以一种更灵活的方式来构建synchronized块。使用synchronized关键字，你必须以结构化方式得到释放synchronized代码块的控制权。Lock接口允许你获得更复杂的结构来实现你的临界区。
+    Lock 接口比synchronized关键字提供更多额外的功能。新功能之一是实现的tryLock()方法。这种方法试图获取锁的控制权并且如果它不能获取该锁，是因为其他线程在使用这个锁，它将返回这个锁。
+    使用synchronized关键字，当线程A试图执行synchronized代码块，如果线程B正在执行它，那么线程A将阻塞直到线程B执行完synchronized代码块。使用锁，你可以执行tryLock()方法，这个方法
+    返回一个 Boolean值表示，是否有其他线程正在运行这个锁所保护的代码。    当有多个读者和一个写者时，Lock接口允许读写操作分离。    Lock接口比synchronized关键字提供更好的性能
+    通过锁来同步代码块和通过Lock接口及其实现者ReentrantLock类来创建临界区，实现一个程序来模拟打印队列
+
+    Lock 接口（和ReentrantLock类）包含其他方法来获取锁的控制权，那就是tryLock()方法。这个方法与lock()方法的最大区别是，如果一 个线程调用这个方法不能获取Lock接口的控制权时，
+    将会立即返回并且不会使这个线程进入睡眠。这个方法返回一个boolean值，true表示这个线程 获取了锁的控制权，false则表示没有。
+
+2.6基本线程同步（六）使用读/写锁同步数据访问 two6
+    锁所提供的最重要的改进之一就是ReadWriteLock接口和唯一 一个实现它的ReentrantReadWriteLock类。这个类提供两把锁，一把用于读操作和一把用于写操作。同时可以有多个线程执行读操作，
+    但只有一个线程可以执行写操作。当一个线程正在执行一个写操作，不可能有任何线程执行读操作。
+
+2.7基本线程同步（七）修改Lock的公平性 two7
+    在ReentrantLock类和 ReentrantReadWriteLock类的构造器中，允许一个名为fair的boolean类型参数，它允许你来控制这些类的行为。默认值为 false，这将启用非公平模式。
+    公平锁：线程获取锁的顺序是按照线程加锁的顺序来分配的，即先来先得的FIFO先进先出顺序。
+
+2.8基本线程同步（八）在Lock中使用多个条件 two8
+    一个锁可能伴随着多个条件。这些条件声明在Condition接口中。 这些条件的目的是允许线程拥有锁的控制并且检查条件是否为true，如果是false，那么线程将被阻塞，直到其他线程唤醒它们。
+    Condition接口提供一种机制，阻塞一个线程和唤醒一个被阻塞的线程。
